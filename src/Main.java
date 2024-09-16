@@ -38,6 +38,11 @@ class Main{
         JMenuItem System = new JMenuItem("System Default");
         JMenuItem light = new JMenuItem("Light Mode");
 
+
+        JMenuItem large = new JMenuItem("Large");
+        JMenuItem medium = new JMenuItem("Default");
+        JMenuItem small = new JMenuItem("Small");
+
         public void interactive(){
             tutorial.addActionListener(e ->{
                 JOptionPane.showMessageDialog(frame,"Choose A File and How To Interact With it.");
@@ -56,6 +61,18 @@ class Main{
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+            });
+
+            Dark.addActionListener(e ->{
+                //insert flatlaf and dark module
+            });
+
+            light.addActionListener(e ->{
+                //insert flatlaf and light module
+            });
+
+            System.addActionListener(e ->{
+                //insert flatlaf intelliJ
             });
         }
     }
