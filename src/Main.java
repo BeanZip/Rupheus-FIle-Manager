@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.net.URI;
 
 class Main{
     static class Window {
@@ -39,6 +40,14 @@ class Main{
         public void interactive(){
             tutorial.addActionListener(e ->{
                 JOptionPane.showMessageDialog(frame,"Choose A File and How To Interact With it.");
+            });
+
+            GitHub.addActionListener(e ->{
+                try{
+                    URI uri = new URI("https://github.com/BeanZip");
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             });
         }
     }
