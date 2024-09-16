@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.net.URI;
 
 class Main{
@@ -45,8 +46,15 @@ class Main{
             GitHub.addActionListener(e ->{
                 try{
                     URI uri = new URI("https://github.com/BeanZip");
+                    Desktop desktop = Desktop.getDesktop();
+                    if (desktop.isSupported(Desktop.Action.BROWSE)){
+                        desktop.browse(uri);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frame,"Could Not Be Initialized");
+                    }
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
                 }
             });
         }
