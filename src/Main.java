@@ -1,3 +1,7 @@
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
@@ -5,15 +9,14 @@ import java.net.URI;
 class Main{
     static class Window {
 
-        JFrame frame = new JFrame("File Manager CL12");
-        boolean x = true;
+        JFrame frame = new JFrame("Rupheus File Manager");
         public void InitWindow(int ScreenWidth,int ScreenHeight){
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(ScreenWidth,ScreenHeight);
         }
 
-        public void Visible(){
-            frame.setVisible(x);
+        public void Visible(boolean Displaying){
+            frame.setVisible(Displaying);
             if(!frame.isVisible()){
                 System.out.print("Error Could not Initialize");
             }
@@ -64,16 +67,45 @@ class Main{
             });
 
             Dark.addActionListener(e ->{
-                //insert flatlaf and dark module
+                FlatDarkLaf.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
             });
 
             light.addActionListener(e ->{
-                //insert flatlaf and light module
+                FlatLightLaf.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
             });
 
             System.addActionListener(e ->{
-                //insert flatlaf intelliJ
+                FlatIntelliJLaf.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
             });
         }
+
+        public void menu(){
+            menuBar.add(Help);
+            menuBar.add(Options);
+            Help.add(tutorial);
+            Help.add(GitHub);
+            Options.add(adjust);
+            Options.add(theme);
+            adjust.add(large);
+            adjust.add(medium);
+            adjust.add(small);
+            theme.add(Dark);
+            theme.add(light);
+            theme.add(System);
+            frame.setJMenuBar(menuBar);
+        }
+    }
+
+
+    public static void main(String[] args){
+        Menu m1 = new Menu();
+
+        m1.InitWindow(400,400);
+        m1.menu();
+        m1.interactive();
+        m1.Visible(true);
     }
 }
