@@ -35,5 +35,11 @@ class Main{
         JMenuItem Dark = new JMenuItem("Dark Mode");
         JMenuItem System = new JMenuItem("System Default");
         JMenuItem light = new JMenuItem("Light Mode");
+
+        public void interactive(){
+            tutorial.addActionListener(e ->{
+                JOptionPane.showMessageDialog(frame,"Choose A File and How To Interact With it.");
+            });
+        }
     }
 }
