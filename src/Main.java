@@ -1,7 +1,6 @@
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -155,8 +154,8 @@ class Main{
         }
 
         void drawtoframe(){
-            add(treeScrollPane, BorderLayout.WEST);
-            add(tableScrollPane, BorderLayout.CENTER);
+            frame.add(treeScrollPane, BorderLayout.WEST);
+            frame.add(tableScrollPane, BorderLayout.CENTER);
         }
     }
 
