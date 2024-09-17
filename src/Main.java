@@ -170,7 +170,7 @@ class Main{
         fm.fileworks();
         fm.drawtoframe();
 
-        m1.Visible(true);
+        fm.Visible(true);
     }
 
     // A simple wrapper class to represent files in the JTree
