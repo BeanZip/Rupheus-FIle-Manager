@@ -3,16 +3,22 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.io.File;
 import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 class Main{
     static class Window extends JFrame{
 
         JFrame frame = new JFrame("Rupheus File Manager");
+
         public void InitWindow(int ScreenWidth,int ScreenHeight){
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(ScreenWidth,ScreenHeight);
@@ -31,8 +37,6 @@ class Main{
     }
 
     static class Menu extends Window{
-        public int x;
-        public int y;
         JMenuBar menuBar = new JMenuBar();
         JMenu Help = new JMenu("Help");
         JMenu Options = new JMenu("Options");
@@ -45,7 +49,6 @@ class Main{
         JMenuItem Dark = new JMenuItem("Dark Mode");
         JMenuItem System = new JMenuItem("System Default");
         JMenuItem light = new JMenuItem("Light Mode");
-
 
         public void interactive(){
             tutorial.addActionListener(e ->{
@@ -96,16 +99,67 @@ class Main{
         }
     }
 
-    static class manager extends Window{
-        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(new FileManagerGUI.FileNode(new File(File.listRoots()[0].getAbsolutePath())));
+    static class FileManager extends Window{
         private JTree fileTree;
-        private JTable fileTable;
-        private DefaultTableModel tableModel;
-        private JScrollPane treeScrollPane, tableScrollPane;
+        private DefaultMutableTreeNode rootNode;
+        private JScrollPane treeScrollPane;
         JFileChooser fileChooser = new JFileChooser();
+        String[] columnNames = {"Name", "Size", "Last Modified"};
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        JTable fileTable = new JTable(tableModel);
+        JScrollPane tableScrollPane = new JScrollPane(fileTable);
 
+        void fileworks(){
+            rootNode = new DefaultMutableTreeNode(new FileNode(new File(File.listRoots()[0].getAbsolutePath())));
+            fileTree = new JTree(buildFileTree(rootNode, new File(File.listRoots()[0].getAbsolutePath())));
+            fileTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+            fileTree.addTreeSelectionListener(new TreeSelectionListener() {
+                @Override
+                public void valueChanged(TreeSelectionEvent e) {
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) fileTree.getLastSelectedPathComponent();
+                    if (selectedNode != null) {
+                        FileNode selectedFileNode = (FileNode) selectedNode.getUserObject();
+                        populateFileTable(selectedFileNode.getFile());
+                    }
+                }
+            });
+
+            treeScrollPane = new JScrollPane(fileTree); // Initialize the tree scroll pane after creating fileTree
+        }
+
+        private DefaultMutableTreeNode buildFileTree(DefaultMutableTreeNode node, File file) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(new FileNode(f));
+                    if (f.isDirectory()) {
+                        buildFileTree(childNode, f);
+                    }
+                    node.add(childNode);
+                }
+            }
+            return node;
+        }
+
+        private void populateFileTable(File directory) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                tableModel.setRowCount(0); // Clear the table
+                for (File file : files) {
+                    String name = file.getName();
+                    long size = file.length();
+                    String lastModified = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(file.lastModified()));
+                    tableModel.addRow(new Object[]{name, size, lastModified});
+                }
+            }
+        }
+
+        void drawtoframe(){
+            add(treeScrollPane, BorderLayout.WEST);
+            add(tableScrollPane, BorderLayout.CENTER);
+        }
     }
-
 
     public static void main(String[] args){
         Menu m1 = new Menu();
@@ -114,5 +168,27 @@ class Main{
         m1.menu();
         m1.interactive();
         m1.Visible(true);
+
+        FileManager fm = new FileManager();
+        fm.fileworks();
+        fm.drawtoframe();
+    }
+
+    // A simple wrapper class to represent files in the JTree
+    static class FileNode {
+        private File file;
+
+        public FileNode(File file) {
+            this.file = file;
+        }
+
+        public File getFile() {
+            return file;
+        }
+
+        @Override
+        public String toString() {
+            return file.getName().isEmpty() ? file.getAbsolutePath() : file.getName();
+        }
     }
 }
