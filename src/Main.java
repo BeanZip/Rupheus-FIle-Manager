@@ -110,9 +110,7 @@ class Main{
     public static void main(String[] args){
         Menu m1 = new Menu();
 
-        m1.x = 600;
-        m1.y = m1.x/2;
-        m1.InitWindow(m1.x, m1.y);
+        m1.InitWindow(600, 600);
         m1.menu();
         m1.interactive();
         m1.Visible(true);
