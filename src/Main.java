@@ -97,7 +97,7 @@ class Main{
         }
     }
 
-    static class FileManager extends Window{
+    static class FileManager extends Menu{
         private JTree fileTree;
         private DefaultMutableTreeNode rootNode;
         private JScrollPane treeScrollPane;
@@ -160,13 +160,12 @@ class Main{
     }
 
     public static void main(String[] args){
-        Menu m1 = new Menu();
-
-        m1.InitWindow(600, 600);
-        m1.menu();
-        m1.interactive();
-
         FileManager fm = new FileManager();
+        fm.InitWindow(600, 600);
+        fm.menu();
+        fm.interactive();
+
+
         fm.fileworks();
         fm.drawtoframe();
 
