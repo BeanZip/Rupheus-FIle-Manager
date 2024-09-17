@@ -18,7 +18,6 @@ class Main{
     static class Window extends JFrame{
 
         JFrame frame = new JFrame("Rupheus File Manager");
-
         public void InitWindow(int ScreenWidth,int ScreenHeight){
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(ScreenWidth,ScreenHeight);
@@ -167,11 +166,12 @@ class Main{
         m1.InitWindow(600, 600);
         m1.menu();
         m1.interactive();
-        m1.Visible(true);
 
         FileManager fm = new FileManager();
         fm.fileworks();
         fm.drawtoframe();
+
+        m1.Visible(true);
     }
 
     // A simple wrapper class to represent files in the JTree
