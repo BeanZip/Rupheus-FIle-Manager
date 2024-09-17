@@ -3,7 +3,10 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.io.File;
 import java.net.URI;
 
 class Main{
@@ -94,6 +97,11 @@ class Main{
     }
 
     static class manager extends Window{
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(new FileManagerGUI.FileNode(new File(File.listRoots()[0].getAbsolutePath())));
+        private JTree fileTree;
+        private JTable fileTable;
+        private DefaultTableModel tableModel;
+        private JScrollPane treeScrollPane, tableScrollPane;
         JFileChooser fileChooser = new JFileChooser();
 
     }
