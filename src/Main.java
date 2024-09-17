@@ -1,6 +1,9 @@
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatNightOwlIJTheme;
+
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -45,8 +48,9 @@ class Main{
         JMenuItem GitHub = new JMenuItem("GitHub");
 
         JMenuItem Dark = new JMenuItem("Dark Mode");
-        JMenuItem System = new JMenuItem("System Default");
+        JMenuItem Gruv = new JMenuItem("Gruvbox");
         JMenuItem light = new JMenuItem("Light Mode");
+        JMenuItem night = new JMenuItem("Night Owl");
 
         public void interactive(){
             tutorial.addActionListener(e ->{
@@ -78,8 +82,13 @@ class Main{
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            System.addActionListener(e ->{
-                FlatIntelliJLaf.setup();
+            Gruv.addActionListener(e -> {
+                FlatGruvboxDarkSoftIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            night.addActionListener(e ->{
+                FlatNightOwlIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
         }
@@ -92,7 +101,8 @@ class Main{
             Options.add(theme);
             theme.add(Dark);
             theme.add(light);
-            theme.add(System);
+            theme.add(Gruv);
+            theme.add(night);
             frame.setJMenuBar(menuBar);
         }
     }
