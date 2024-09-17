@@ -7,12 +7,13 @@ import java.awt.*;
 import java.net.URI;
 
 class Main{
-    static class Window {
+    static class Window extends JFrame{
 
         JFrame frame = new JFrame("Rupheus File Manager");
         public void InitWindow(int ScreenWidth,int ScreenHeight){
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(ScreenWidth,ScreenHeight);
+            frame.getContentPane().setLayout(new BorderLayout());
         }
 
         public void Visible(boolean Displaying){
@@ -90,6 +91,11 @@ class Main{
             theme.add(System);
             frame.setJMenuBar(menuBar);
         }
+    }
+
+    static class manager extends Window{
+        JFileChooser fileChooser = new JFileChooser();
+
     }
 
 
