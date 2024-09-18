@@ -1,8 +1,10 @@
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatNightOwlIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -43,12 +45,25 @@ class Main{
         JMenu Options = new JMenu("Options");
 
         JMenu theme = new JMenu("Theme");
+        JMenu og = new JMenu("Default Themes");
+        JMenu git = new JMenu("Github Colors");
+        JMenu Gruv = new JMenu("Gruvbox Themes");
+        JMenu atom = new JMenu("Atom Theme");
 
         JMenuItem tutorial = new JMenuItem("How This Works");
-        JMenuItem GitHub = new JMenuItem("GitHub");
-
+        JMenuItem GitHub = new JMenuItem("GitHub Colors");
         JMenuItem Dark = new JMenuItem("Dark Mode");
-        JMenuItem Gruv = new JMenuItem("Gruvbox");
+
+        JMenuItem GruvSoft = new JMenuItem("Gruvbox Soft");
+        JMenuItem GruvHard = new JMenuItem("Gruvbox Hard");
+        JMenuItem GruvMid = new JMenuItem("Gruvbox Medium");
+
+        JMenuItem atomLight= new JMenuItem("Atom Light");
+        JMenuItem atomDark = new JMenuItem("Atom Dark");
+
+        JMenuItem GitL = new JMenuItem("Github Light");
+        JMenuItem GitD = new JMenuItem("Github Dark");
+
         JMenuItem light = new JMenuItem("Light Mode");
         JMenuItem night = new JMenuItem("Night Owl");
 
@@ -82,13 +97,43 @@ class Main{
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            Gruv.addActionListener(e -> {
+            GruvSoft.addActionListener(e -> {
                 FlatGruvboxDarkSoftIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            GruvHard.addActionListener(e ->{
+                FlatGruvboxDarkHardIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            GruvMid.addActionListener(e ->{
+                FlatGruvboxDarkMediumIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
             night.addActionListener(e ->{
                 FlatNightOwlIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            GitL.addActionListener(e ->{
+                FlatGitHubIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            GitD.addActionListener(e ->{
+                FlatGitHubDarkIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            atomLight.addActionListener(e ->{
+                FlatAtomOneLightIJTheme.setup();
+                SwingUtilities.updateComponentTreeUI(frame);
+            });
+
+            atomDark.addActionListener(e ->{
+                FlatAtomOneDarkIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
         }
@@ -99,9 +144,22 @@ class Main{
             Help.add(tutorial);
             Help.add(GitHub);
             Options.add(theme);
-            theme.add(Dark);
-            theme.add(light);
+            theme.add(og);
+            theme.add(git);
+            theme.add(atom);
+
+            git.add(GitD);
+            git.add(GitL);
+
+            atom.add(atomDark);
+            atom.add(atomLight);
+
+            og.add(light);
+            og.add(Dark);
             theme.add(Gruv);
+            Gruv.add(GruvHard);
+            Gruv.add(GruvMid);
+            Gruv.add(GruvSoft);
             theme.add(night);
             frame.setJMenuBar(menuBar);
         }
