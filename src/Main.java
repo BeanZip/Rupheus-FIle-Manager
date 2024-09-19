@@ -76,6 +76,13 @@ class Main{
                 JOptionPane.showMessageDialog(frame,"Choose A File and How To Interact With it.");
             });
 
+
+            tree.addActionListener(e ->{
+
+            });
+            gallery.addActionListener(e ->{
+
+            });
             GitHub.addActionListener(e ->{
                 try{
                     URI uri = new URI("https://github.com/BeanZip");
@@ -176,7 +183,6 @@ class Main{
         private JTree fileTree;
         private DefaultMutableTreeNode rootNode;
         private JScrollPane treeScrollPane;
-        JFileChooser fileChooser = new JFileChooser();
         String[] columnNames = {"Name", "Size", "Last Modified"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable fileTable = new JTable(tableModel);
