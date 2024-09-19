@@ -20,6 +20,7 @@ Shows file details such as name, size, and last modified date in a JTable when a
 
  Offers various view modes and theme options through the menu bar.
 	   Includes a help section with links and guidance on using the application.
-   ### 5. Dynamic File Display 
+
+## 5. Dynamic File Display 
     	     
 Responds to user actions like selecting directories and changing themes, enhancing interactivity.
