@@ -261,7 +261,7 @@ class Main{
         public void switchToGalleryView() {
             frame.getContentPane().removeAll(); // Clear the frame
             galleryView.populateGalleryView(new File(File.listRoots()[0].getAbsolutePath())); // Call inherited method
-            frame.add(galleryView.getGalleryPanel(), BorderLayout.CENTER); // Use gallery panel from the inherited class
+            frame.add(galleryView, BorderLayout.CENTER); // Use gallery panel from the inherited class
             frame.revalidate();
             frame.repaint();
         }
