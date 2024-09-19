@@ -18,5 +18,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="flatlaf-intellij-themes-3.5.1" level="project" />
+    <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>

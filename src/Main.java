@@ -80,9 +80,7 @@ class Main{
             tree.addActionListener(e ->{
 
             });
-            gallery.addActionListener(e ->{
 
-            });
             GitHub.addActionListener(e ->{
                 try{
                     URI uri = new URI("https://github.com/BeanZip");
@@ -179,7 +177,8 @@ class Main{
         }
     }
 
-    static class FileManager extends Menu{
+    static class FileManager extends Menu implements TreeSelectionListener{
+        GalleryView galleryView = new GalleryView();
         private JTree fileTree;
         private DefaultMutableTreeNode rootNode;
         private JScrollPane treeScrollPane;
@@ -188,7 +187,14 @@ class Main{
         JTable fileTable = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(fileTable);
 
+         public FileManager() {
+             super();
+         }
+
         void fileworks(){
+            gallery.addActionListener(e ->{
+                switchToGalleryView();
+            });
             rootNode = new DefaultMutableTreeNode(new FileNode(new File(File.listRoots()[0].getAbsolutePath())));
             fileTree = new JTree(buildFileTree(rootNode, new File(File.listRoots()[0].getAbsolutePath())));
             fileTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -234,9 +240,28 @@ class Main{
             }
         }
 
+
+
         void drawtoframe(){
             frame.add(treeScrollPane, BorderLayout.WEST);
             frame.add(tableScrollPane, BorderLayout.CENTER);
+        }
+
+        @Override
+        public void valueChanged(TreeSelectionEvent e) {
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) fileTree.getLastSelectedPathComponent();
+            if (selectedNode != null) {
+                FileNode selectedFileNode = (FileNode) selectedNode.getUserObject();
+                populateFileTable(selectedFileNode.getFile());
+            }
+        }
+
+        public void switchToGalleryView() {
+            frame.getContentPane().removeAll(); // Clear the frame
+            galleryView.populateGalleryView(new File(File.listRoots()[0].getAbsolutePath())); // Call inherited method
+            frame.add(galleryView.getGalleryPanel(), BorderLayout.CENTER); // Use gallery panel from the inherited class
+            frame.revalidate();
+            frame.repaint();
         }
     }
 
