@@ -42,8 +42,13 @@ class Main{
         JMenuBar menuBar = new JMenuBar();
         JMenu Help = new JMenu("Help");
         JMenu Options = new JMenu("Options");
+        JMenu view = new JMenu("View Mode");
 
         JMenu theme = new JMenu("Theme");
+
+        JMenuItem tree = new JMenuItem("Tree View");
+        JMenuItem gallery = new JMenuItem("Gallery View");
+
         JMenu og = new JMenu("Default Themes");
         JMenu git = new JMenu("Github Colors");
         JMenu Gruv = new JMenu("Gruvbox Themes");
@@ -143,6 +148,9 @@ class Main{
             Help.add(tutorial);
             Help.add(GitHub);
             Options.add(theme);
+            Options.add(view);
+            view.add(tree);
+            view.add(gallery);
             theme.add(og);
             theme.add(git);
             theme.add(atom);
