@@ -191,10 +191,12 @@ class Main{
              super();
          }
 
+         public void interactivegallery(){
+             gallery.addActionListener(e ->{
+                 switchToGalleryView();
+             });
+         }
         void fileworks(){
-            gallery.addActionListener(e ->{
-                switchToGalleryView();
-            });
             rootNode = new DefaultMutableTreeNode(new FileNode(new File(File.listRoots()[0].getAbsolutePath())));
             fileTree = new JTree(buildFileTree(rootNode, new File(File.listRoots()[0].getAbsolutePath())));
             fileTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -272,6 +274,7 @@ class Main{
         fm.menu();
         fm.interactive();
 
+        fm.interactivegallery();
 
         fm.fileworks();
         fm.drawtoframe();
