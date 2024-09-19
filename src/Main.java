@@ -55,7 +55,7 @@ class Main{
         JMenu atom = new JMenu("Atom Theme");
 
         JMenuItem tutorial = new JMenuItem("How This Works");
-        JMenuItem GitHub = new JMenuItem("GitHub Colors");
+        JMenuItem GitHub = new JMenuItem("GitHub");
         JMenuItem Dark = new JMenuItem("Dark Mode");
 
         JMenuItem GruvSoft = new JMenuItem("Gruvbox Soft");
@@ -241,6 +241,7 @@ class Main{
     }
 
     public static void main(String[] args){
+        FlatLightLaf.setup();
         FileManager fm = new FileManager();
         fm.InitWindow(600, 600);
         fm.menu();
