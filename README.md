@@ -1,8 +1,26 @@
-# Rupheus File Manager
+# Overview
 
-Simple Java File Manager I like to call "Rupheus" It's nothing to extravagant and this is really just some passion project. Using Swing UI and FlatLaf Look and Feel
-Rupheus is Designed to be lightweight whilst being convenient, by technicality this is OpenSourced.
+Swing UI file manager i call "Rupheus". meant to be a passion project
 
-The Code Is Very Messy and I will organize later once i get better at this..!
+## What is product/service/concept
+Made in Pure Java and planned to update overtime with other features.
 
-Use This As You Like.
+ # 1. Graphical User Interface:
+  The application uses Swing components to build a GUI, making it user-friendly and interactive.
+
+## 2. Theme Management:
+Supports various themes (FlatLaf, Gruvbox, Atom, GitHub, etc.) which can be changed dynamically through the menu.
+Themes are applied using FlatLaf library classes, and the UI is updated accordingly.
+
+# 3. File Management:
+Displays files and directories in a hierarchical structure using a JTree.
+Shows file details such as name, size, and last modified date in a JTable when a directory is selected.
+
+## 4. Interactive Menu:
+
+ Offers various view modes and theme options through the menu bar.
+	   Includes a help section with links and guidance on using the application.
+
+## 5. Dynamic File Display 
+    	     
+Responds to user actions like selecting directories and changing themes, enhancing interactivity.
