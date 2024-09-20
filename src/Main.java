@@ -5,6 +5,7 @@ import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -13,32 +14,32 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class Main{
-    static class Window extends JFrame{
-
+class Main {
+    static class Window extends JFrame {
         JFrame frame = new JFrame("Rupheus File Manager");
-        public void InitWindow(int ScreenWidth,int ScreenHeight){
+
+        public void InitWindow(int ScreenWidth, int ScreenHeight) {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(ScreenWidth,ScreenHeight);
+            frame.setSize(ScreenWidth, ScreenHeight);
             frame.getContentPane().setLayout(new BorderLayout());
         }
 
-        public void Visible(boolean Displaying){
+        public void Visible(boolean Displaying) {
             frame.setVisible(Displaying);
-            if(!frame.isVisible()){
+            if (!frame.isVisible()) {
                 System.out.print("Error Could not Initialize");
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(frame, "Window Successfully Deployed!");
             }
         }
     }
 
-    static class Menu extends Window{
+    static class Menu extends Window {
         JMenuBar menuBar = new JMenuBar();
         JMenu Help = new JMenu("Help");
         JMenu Options = new JMenu("Options");
@@ -62,7 +63,7 @@ class Main{
         JMenuItem GruvHard = new JMenuItem("Gruvbox Hard");
         JMenuItem GruvMid = new JMenuItem("Gruvbox Medium");
 
-        JMenuItem atomLight= new JMenuItem("Atom Light");
+        JMenuItem atomLight = new JMenuItem("Atom Light");
         JMenuItem atomDark = new JMenuItem("Atom Dark");
 
         JMenuItem GitL = new JMenuItem("Github Light");
@@ -71,31 +72,31 @@ class Main{
         JMenuItem light = new JMenuItem("Light Mode");
         JMenuItem night = new JMenuItem("Night Owl");
 
-        public void interactive(){
-            tutorial.addActionListener(e ->{
-                JOptionPane.showMessageDialog(frame,"Choose A File and How To Interact With it.");
+        public void interactive() {
+            tutorial.addActionListener(e -> {
+                JOptionPane.showMessageDialog(frame, "Choose A File and How To Interact With it.");
             });
-            GitHub.addActionListener(e ->{
-                try{
+
+            GitHub.addActionListener(e -> {
+                try {
                     URI uri = new URI("https://github.com/BeanZip");
                     Desktop desktop = Desktop.getDesktop();
-                    if (desktop.isSupported(Desktop.Action.BROWSE)){
+                    if (desktop.isSupported(Desktop.Action.BROWSE)) {
                         desktop.browse(uri);
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(frame,"Could Not Be Initialized");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Could Not Be Initialized");
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             });
 
-            Dark.addActionListener(e ->{
+            Dark.addActionListener(e -> {
                 FlatDarkLaf.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            light.addActionListener(e ->{
+            light.addActionListener(e -> {
                 FlatLightLaf.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
@@ -105,43 +106,43 @@ class Main{
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            GruvHard.addActionListener(e ->{
+            GruvHard.addActionListener(e -> {
                 FlatGruvboxDarkHardIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            GruvMid.addActionListener(e ->{
+            GruvMid.addActionListener(e -> {
                 FlatGruvboxDarkMediumIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            night.addActionListener(e ->{
+            night.addActionListener(e -> {
                 FlatNightOwlIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            GitL.addActionListener(e ->{
+            GitL.addActionListener(e -> {
                 FlatGitHubIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            GitD.addActionListener(e ->{
+            GitD.addActionListener(e -> {
                 FlatGitHubDarkIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            atomLight.addActionListener(e ->{
+            atomLight.addActionListener(e -> {
                 FlatAtomOneLightIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
 
-            atomDark.addActionListener(e ->{
+            atomDark.addActionListener(e -> {
                 FlatAtomOneDarkIJTheme.setup();
                 SwingUtilities.updateComponentTreeUI(frame);
             });
         }
 
-        public void menu(){
+        public void menu() {
             menuBar.add(Help);
             menuBar.add(Options);
             Help.add(tutorial);
@@ -171,8 +172,62 @@ class Main{
         }
     }
 
-    static class FileManager extends Menu implements TreeSelectionListener{
-        GalleryView galleryView = new GalleryView();
+    static class FileManager extends Menu implements TreeSelectionListener {
+        @Override
+        public void valueChanged(TreeSelectionEvent e) {
+
+        }
+
+        // GalleryView Class embedded within FileManager
+        class GalleryView extends JPanel {
+            private final JPanel galleryPanel = new JPanel(new FlowLayout());
+
+            public GalleryView() {
+                add(galleryPanel);
+            }
+
+            // Populate the gallery with image files from a directory
+            public void populateGalleryView(File directory) {
+                galleryPanel.removeAll();
+                File[] files = directory.listFiles();
+
+                if (files != null) {
+                    for (File file : files) {
+                        if (isImageFile(file)) {
+                            try {
+                                Image img = ImageIO.read(file);
+                                if (img != null) {
+                                    ImageIcon icon = new ImageIcon(img.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+                                    JLabel label = new JLabel(icon);
+                                    label.setText(file.getName());
+                                    label.setHorizontalTextPosition(JLabel.CENTER);
+                                    label.setVerticalTextPosition(JLabel.BOTTOM);
+                                    galleryPanel.add(label);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                revalidate();
+                repaint();
+            }
+
+            private boolean isImageFile(File file) {
+                String[] imageExtensions = {"png", "jpg", "jpeg", "gif", "bmp"};
+                String fileName = file.getName().toLowerCase();
+                for (String extension : imageExtensions) {
+                    if (fileName.endsWith(extension)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        private GalleryView galleryView = new GalleryView();
         private JTree fileTree;
         private DefaultMutableTreeNode rootNode;
         private JScrollPane treeScrollPane;
@@ -181,38 +236,29 @@ class Main{
         JTable fileTable = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(fileTable);
 
-         public FileManager() {
-             super();
-         }
+        public FileManager() {
+            super();
+        }
 
-         public void interactivegallery(){
-             gallery.addActionListener(e ->{
-                 switchToGalleryView();
-             });
-         }
+        public void interactivegallery() {
+            gallery.addActionListener(e -> switchToGalleryView());
+            tree.addActionListener(e -> switchToTreeView());
+        }
 
-         public void interactivetree(){
-             tree.addActionListener(e ->{
-                 switchToTreeView();
-             });
-         }
-        void fileworks(){
+        void fileworks() {
             rootNode = new DefaultMutableTreeNode(new FileNode(new File(File.listRoots()[0].getAbsolutePath())));
             fileTree = new JTree(buildFileTree(rootNode, new File(File.listRoots()[0].getAbsolutePath())));
             fileTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-            fileTree.addTreeSelectionListener(new TreeSelectionListener() {
-                @Override
-                public void valueChanged(TreeSelectionEvent e) {
-                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) fileTree.getLastSelectedPathComponent();
-                    if (selectedNode != null) {
-                        FileNode selectedFileNode = (FileNode) selectedNode.getUserObject();
-                        populateFileTable(selectedFileNode.getFile());
-                    }
+            fileTree.addTreeSelectionListener(e -> {
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) fileTree.getLastSelectedPathComponent();
+                if (selectedNode != null) {
+                    FileNode selectedFileNode = (FileNode) selectedNode.getUserObject();
+                    populateFileTable(selectedFileNode.getFile());
                 }
             });
 
-            treeScrollPane = new JScrollPane(fileTree); // Initialize the tree scroll pane after creating fileTree
+            treeScrollPane = new JScrollPane(fileTree);
         }
 
         private DefaultMutableTreeNode buildFileTree(DefaultMutableTreeNode node, File file) {
@@ -232,7 +278,7 @@ class Main{
         private void populateFileTable(File directory) {
             File[] files = directory.listFiles();
             if (files != null) {
-                tableModel.setRowCount(0); // Clear the table
+                tableModel.setRowCount(0);
                 for (File file : files) {
                     String name = file.getName();
                     long size = file.length();
@@ -242,70 +288,50 @@ class Main{
             }
         }
 
-
-
-        void drawtoframe(){
-            frame.add(treeScrollPane, BorderLayout.WEST);
-            frame.add(tableScrollPane, BorderLayout.CENTER);
-        }
-
-        @Override
-        public void valueChanged(TreeSelectionEvent e) {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) fileTree.getLastSelectedPathComponent();
-            if (selectedNode != null) {
-                FileNode selectedFileNode = (FileNode) selectedNode.getUserObject();
-                populateFileTable(selectedFileNode.getFile());
-            }
-        }
-
         public void switchToGalleryView() {
-            frame.getContentPane().removeAll(); // Clear the frame
-            galleryView.populateGalleryView(new File(File.listRoots()[0].getAbsolutePath())); // Call inherited method
-            frame.add(galleryView, BorderLayout.CENTER); // Use gallery panel from the inherited class
+            File selectedDirectory = new File(File.listRoots()[0].getAbsolutePath()); // Change to the root or selected directory
+            galleryView.populateGalleryView(selectedDirectory);
+
+            frame.getContentPane().removeAll(); // Clear frame
+            frame.add(galleryView, BorderLayout.CENTER); // Add gallery view
             frame.revalidate();
             frame.repaint();
         }
 
         public void switchToTreeView() {
-            frame.getContentPane().removeAll(); // Clear the frame
-            frame.add(treeScrollPane, BorderLayout.WEST); // Add the tree view
-            frame.add(tableScrollPane, BorderLayout.CENTER); // Add the table
+            frame.getContentPane().removeAll();
+            frame.add(treeScrollPane, BorderLayout.WEST);
+            frame.add(tableScrollPane, BorderLayout.CENTER);
             frame.revalidate();
             frame.repaint();
         }
-
     }
 
-    public static void main(String[] args){
-        FlatLightLaf.setup();
-        FileManager fm = new FileManager();
-        fm.InitWindow(600, 600);
-        fm.menu();
-        fm.interactive();
+    public static void main(String[] args) {
+        FileManager manager = new FileManager();
+        manager.InitWindow(800, 600);
+        manager.fileworks();
+        manager.interactive();
+        manager.menu();
+        manager.interactivegallery();
+        manager.switchToTreeView(); // Start with Tree View
+        manager.Visible(true);
+    }
+}
 
-        fm.interactivegallery();
+class FileNode {
+    private final File file;
 
-        fm.fileworks();
-        fm.drawtoframe();
-
-        fm.Visible(true);
+    public FileNode(File file) {
+        this.file = file;
     }
 
-    // A simple wrapper class to represent files in the JTree
-    static class FileNode {
-        private File file;
+    public File getFile() {
+        return file;
+    }
 
-        public FileNode(File file) {
-            this.file = file;
-        }
-
-        public File getFile() {
-            return file;
-        }
-
-        @Override
-        public String toString() {
-            return file.getName().isEmpty() ? file.getAbsolutePath() : file.getName();
-        }
+    @Override
+    public String toString() {
+        return file.getName().isEmpty() ? file.getAbsolutePath() : file.getName();
     }
 }
