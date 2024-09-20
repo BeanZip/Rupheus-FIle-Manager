@@ -322,6 +322,7 @@ class Main {
     }
 
     public static void main(String[] args) {
+        FlatLightLaf.setup();
         FileManager manager = new FileManager();
         manager.InitWindow(800, 600);
         manager.fileworks();
