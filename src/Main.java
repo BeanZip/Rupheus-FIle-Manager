@@ -179,7 +179,7 @@ class Main {
         }
 
         // GalleryView Class embedded within FileManager
-        class GalleryView extends JPanel {
+        static class GalleryView extends JPanel {
             private final JPanel galleryPanel = new JPanel(new FlowLayout());
 
             public GalleryView() {
