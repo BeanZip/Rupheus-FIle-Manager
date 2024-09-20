@@ -2,7 +2,7 @@
 
 Swing UI file manager i call "Rupheus". meant to be a passion project
 
-## What is Rupheus?
+## What is Rupheus Composed of?
 Made in Pure Java and planned to update overtime with other features.
 
  # 1. Graphical User Interface:
