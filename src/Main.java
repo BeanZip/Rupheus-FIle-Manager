@@ -289,14 +289,28 @@ class Main {
         }
 
         public void switchToGalleryView() {
-            File selectedDirectory = new File(File.listRoots()[0].getAbsolutePath()); // Change to the root or selected directory
-            galleryView.populateGalleryView(selectedDirectory);
+            // Choose a directory manually for now or use a file chooser for testing
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = fileChooser.showOpenDialog(null);
 
-            frame.getContentPane().removeAll(); // Clear frame
-            frame.add(galleryView, BorderLayout.CENTER); // Add gallery view
-            frame.revalidate();
-            frame.repaint();
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedDirectory = fileChooser.getSelectedFile();
+
+                if (selectedDirectory != null && selectedDirectory.isDirectory()) {
+                    // Populate the gallery view with image files from the selected directory
+                    galleryView.populateGalleryView(selectedDirectory);
+
+                    frame.getContentPane().removeAll(); // Clear the frame
+                    frame.add(galleryView, BorderLayout.CENTER); // Add gallery view
+                    frame.revalidate();
+                    frame.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid Directory Selected!");
+                }
+            }
         }
+
 
         public void switchToTreeView() {
             frame.getContentPane().removeAll();
