@@ -75,12 +75,6 @@ class Main{
             tutorial.addActionListener(e ->{
                 JOptionPane.showMessageDialog(frame,"Choose A File and How To Interact With it.");
             });
-
-
-            tree.addActionListener(e ->{
-
-            });
-
             GitHub.addActionListener(e ->{
                 try{
                     URI uri = new URI("https://github.com/BeanZip");
@@ -194,6 +188,12 @@ class Main{
          public void interactivegallery(){
              gallery.addActionListener(e ->{
                  switchToGalleryView();
+             });
+         }
+
+         public void interactivetree(){
+             tree.addActionListener(e ->{
+                 switchToTreeView();
              });
          }
         void fileworks(){
