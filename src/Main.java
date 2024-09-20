@@ -265,6 +265,15 @@ class Main{
             frame.revalidate();
             frame.repaint();
         }
+
+        public void switchToTreeView() {
+            frame.getContentPane().removeAll(); // Clear the frame
+            frame.add(treeScrollPane, BorderLayout.WEST); // Add the tree view
+            frame.add(tableScrollPane, BorderLayout.CENTER); // Add the table
+            frame.revalidate();
+            frame.repaint();
+        }
+
     }
 
     public static void main(String[] args){
